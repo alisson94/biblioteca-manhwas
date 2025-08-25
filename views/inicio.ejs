@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha ManhwaTeca</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>ManhwaTeca</h1>
+            <nav>
+                <a href="#a" class="btn-abrir-modal btn-primary">Adicionar Manhwa</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="grid-manhwas">
+
+            <% if (manhwas && manhwas.length > 0) { %>
+                <% manhwas.forEach(manhwa => { %>
+                    <a href="/manhwa/<%= manhwa.slug %>" class="manhwa-card">
+                        <img src="<%= manhwa.capa %>" alt="<%= manhwa.titulo %>">
+                        <div class="card-info">
+                            <h3><%= manhwa.titulo %></h3>
+                    <div class="tags">
+                        <span class="tag status-lendo"><%= manhwa.status %></span>
+                        <% manhwa.tags.forEach(tag => { %>
+                            <span class="tag"><%= tag %></span>
+                        <% }) %>
+                    </div>
+                </div>
+            </a>
+            
+                <% }); %>
+            <% } else { %>
+                <p>Nenhum manhwa cadastrado ainda.</p>
+            <% } %>
+            
+        </section>
+
+        <!-- MODAL DE FORMULÁRIO -->
+        <div id="modal-adicionar" class="modal-overlay">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h2>Adicionar Novo Manhwa</h2>
+                <button id="btn-fechar-modal" class="btn-close">&times;</button>
+            </header>
+            
+            <form action="/adicionar" method="POST" class="form-manhwa" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="titulo">Título</label>
+                    <input type="text" id="titulo" name="titulo" required>
+                </div>
+                <div class="form-group">
+                    <label for="autor">Autor</label>
+                    <input type="text" id="autor" name="autor" required>
+                </div>
+                <div class="form-group">
+                    <label for="capa">Imagem da Capa</label>
+                    <input type="file" id="capa" name="capa" placeholder="/imagens/nome-do-arquivo.jpg" required accept="image/png, image/jpeg, image/webp">
+                </div>
+                <div class="form-group">
+                    <label for="capitulos">Total de capítulos</label>
+                    <input type="number" id="capitulos" name="capitulos" required>
+                </div>
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select id="status" name="status">
+                        <option value="Lendo">Lendo</option>
+                        <option value="Concluído">Concluído</option>
+                        <option value="Planejo Ler">Planejo Ler</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="tags">Tags (separado por vírgula)</label>
+                    <input type="text" id="tags" name="tags" placeholder="Ex: Ação, Aventura" required>
+                </div>
+
+                <button type="submit" class="btn-primary">Salvar Manhwa</button>
+            </form>
+        </div>
+    </div>
+    </main>
+
+    <a href="#adicionar" class="fab btn-abrir-modal">+</a>
+
+    <footer>
+        <p>&copy; 2025 - Criado por <strong>Álisson</strong> com ❤️ para <strong>Emilin</strong></p>
+    </footer>
+
+    <script src="/js/main.js"></script>
+
+</body>
+</html>
