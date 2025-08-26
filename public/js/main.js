@@ -1,12 +1,11 @@
-// Espera o HTML ser totalmente carregado para rodar o script
+
 document.addEventListener('DOMContentLoaded', () => {
-    // Pega os elementos do HTML que vamos manipular
     const btnAbrirModal1 = document.getElementsByClassName('btn-abrir-modal')[0];
     const btnAbrirModal2 = document.getElementsByClassName('btn-abrir-modal')[1];
     const btnFecharModal = document.getElementById('btn-fechar-modal');
     const modal = document.getElementById('modal-adicionar');
 
-    // Se os elementos existirem na página...
+    
     if (btnAbrirModal1 && btnAbrirModal2 && btnFecharModal && modal) {
 
         // Função para abrir o modal
@@ -32,6 +31,26 @@ document.addEventListener('DOMContentLoaded', () => {
             // Se o alvo do clique for o fundo cinza (o próprio modal-overlay)...
             if (event.target === modal) {
                 fecharModal();
+            }
+        });
+    }
+
+    // ----- LOGICA PARA MODAL DA PAG DETALHES -----
+    const btnAbrirModalLink = document.getElementById('btn-abrir-modal-link');
+    const btnFecharModalLink = document.getElementById('btn-fechar-modal-link');
+    const modalLink = document.getElementById('modal-adicionar-link');
+    
+    console.log(btnAbrirModalLink)
+    
+    if (btnAbrirModalLink && btnFecharModalLink && modalLink) {
+        const abrirModalLink = () => { modalLink.style.display = 'flex'; };
+        const fecharModalLink = () => { modalLink.style.display = 'none'; };
+
+        btnAbrirModalLink.addEventListener('click', abrirModalLink);
+        btnFecharModalLink.addEventListener('click', fecharModalLink);
+        modalLink.addEventListener('click', (event) => {
+            if (event.target === modalLink) {
+                fecharModalLink();
             }
         });
     }

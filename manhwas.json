@@ -50,6 +50,12 @@
         "url": "https://www.webtoons.com/en/fantasy/omniscient-reader/list?title_no=5678",
         "cap_atual": 25,
         "cap_total": 60
+      },
+      {
+        "idioma": "es",
+        "url": "http://espanho.com/manhs",
+        "cap_atual": 1,
+        "cap_total": "75"
       }
     ]
   },

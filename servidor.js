@@ -3,7 +3,9 @@ const path = require('path')
 const app = express()
 const fs = require('fs')
 const multer = require('multer')
-const port = 3000
+require('dotenv').config();
+
+const port = process.env.PORT || 3000
 
 const dbPath = path.join(__dirname, 'manhwas.json')
 
@@ -94,6 +96,40 @@ app.post('/adicionar', upload.single('capa'), (req, res) => {
             }
             res.redirect('/')
         })
+    })
+})
+
+app.post('/manhwa/adicionar-link', (req, res) => {
+    const { manhwaSlug, idioma, url, cap_total } = req.body
+
+    fs.readFile(dbPath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Erro ao ler o arquivo JSON:', err)
+            return res.status(500).send('Erro interno do servidor')
+        }
+
+        const manhwas = JSON.parse(data)
+
+        const manhwa = manhwas.find( m => m.slug === manhwaSlug)
+
+        if (manhwa) {
+            manhwa.links.push({
+                idioma,
+                url,
+                cap_atual: 1,
+                cap_total
+            })
+
+            fs.writeFile(dbPath, JSON.stringify(manhwas, null, 2), 'utf8', (err) => {
+                if (err) {
+                    console.error('Erro ao salvar o arquivo JSON:', err)
+                    return res.status(500).send('Erro interno do servidor')
+                }
+                res.redirect(`/manhwa/${manhwaSlug}`)
+            })
+        } else {
+            res.status(404).send('Manhwa não encontrado')
+        }
     })
 })
 

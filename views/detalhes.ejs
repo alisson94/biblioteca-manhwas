@@ -50,7 +50,7 @@
                                             <option value="es" <% if (link.idioma === 'es') { %> selected <% } %> >ES</option>
                                         </select>
                                     </th>
-                                    <th> <a href="<%= link.url %>">Link</a></th>
+                                    <th> <a href="<%= link.url %>" target="_blank" rel="noopener noreferrer"><%= link.url %></a></th>
                                     <th class="coluna-pequena coluna-centralizada">
                                         <select name="capitulos-1" class="select-invisivel">
                                             <% for( let index = 0; index < link.cap_total; index++ ) { %>
@@ -62,49 +62,44 @@
                                 </tr>
                             <% }) %>
 
-                            <tr>
-                                <th class="coluna-pequena">
-                                    <select name="idioma" class="select-invisivel">
-                                        <option value="pt-br">&#x1F1E7;&#x1F1F7; PT-BR</option>
-                                        <option value="en">🇺🇸 EN</option>
-                                        <option value="es">🇪🇸 ES</option>
-                                    </select>
-                                </th>
-                                <th>*link*</th> 
-                                <th class="coluna-pequena ">
-                                    <select name="capitulos-1" class="select-invisivel">
-                                        <option value="1-60">1-60</option>
-                                        <option value="1-70">1-70</option>
-                                        <option value="1-80">1-80</option>
-                                    </select>
-                                </th>
-                                <th>100</th>
-                            </tr>
-
-                            <tr>
-                                <th class="coluna-pequena">
-                                    <select name="idioma" class="select-invisivel">
-                                        <option value="pt-br">PT-BR</option>
-                                        <option value="en">EN</option>
-                                        <option value="es">ES</option>
-                                    </select>
-                                </th>
-                                <th>*link*</th> 
-                                <th class="coluna-pequena coluna-centralizada">
-                                    <select name="capitulos-1" class="select-invisivel">
-                                        <option value="1-60">1-60</option>
-                                        <option value="1-70">1-70</option>
-                                        <option value="1-80">1-80</option>
-                                    </select>
-                                </th>
-                                <th>100</th>
-                            </tr>
                             
                         </tbody>
                     </table>
                 </div>
                 <div class="action-buttons">
-                    <a href="#" class="btn-secondary">Adicionar Link</a>
+                    <a href="#" id="btn-abrir-modal-link" class="btn-secondary">Adicionar Link</a>
+                </div>
+
+                <!-- MODAL PARA ADICIONAR LINK -->
+                <div id="modal-adicionar-link" class="modal-overlay">
+                    <div class="modal-content">
+                        <header class="modal-header">
+                            <h2>Adicionar Novo Link</h2>
+                            <button id="btn-fechar-modal-link" class="btn-close">&times;</button>
+                        </header>
+                        
+                        <form action="/manhwa/adicionar-link" method="POST" class="form-manhwa">
+                            <input type="hidden" name="manhwaSlug" value="<%= manhwa.slug %>">
+
+                            <div class="form-group">
+                                <label for="idioma">Idioma</label>
+                                <select id="idioma" name="idioma" class="select-invisivel" style="color-scheme: dark;">
+                                    <option value="pt-br">PT-BR</option>
+                                    <option value="en">EN</option>
+                                    <option value="es">ES</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="url">URL do Link</label>
+                                <input type="url" id="url" name="url" placeholder="https://..." required>
+                            </div>
+                            <div class="form-group">
+                                <label for="cap_total">Caps. Totais</label>
+                                <input type="number" id="cap_total" name="cap_total" min="1" value="100" required>
+                            </div>
+                            <button type="submit" class="btn-primary">Adicionar</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </article>
@@ -113,6 +108,8 @@
     <footer>
         <p>&copy; 2025 - Criado por <strong>Álisson</strong> com ❤️ para <strong>Emilin</strong></p>
     </footer>
+
+    <script src="/js/main.js"></script>
 
 </body>
 </html>
