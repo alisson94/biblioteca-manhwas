@@ -32,9 +32,9 @@
                     <table>
                         <thead>
                             <tr>
-                                <th class="coluna-pequena coluna-centralizada">Idioma</th>
+                                <th class="coluna-pequena">Idioma</th>
                                 <th>Link</th>
-                                <th class="coluna-pequena coluna-centralizada">Capítulo atual</th>
+                                <th class="coluna-pequena">Capítulo atual</th>
                                 <th>Total</th>
 
                             </tr>
@@ -44,21 +44,22 @@
                             <% manhwa.links.forEach(link => { %>
                                 <tr>
                                     <th class="coluna-pequena">
-                                        <select name="idioma" class="select-invisivel">
-                                            <option value="pt-br" <% if (link.idioma === 'pt-br') { %> selected <% } %> >PT-BR</option>
-                                            <option value="en" <% if (link.idioma === 'en') { %> selected <% } %> >EN</option>
-                                            <option value="es" <% if (link.idioma === 'es') { %> selected <% } %> >ES</option>
-                                        </select>
+                                        <%= link.idioma %>
                                     </th>
                                     <th> <a href="<%= link.url %>" target="_blank" rel="noopener noreferrer"><%= link.url %></a></th>
                                     <th class="coluna-pequena coluna-centralizada">
-                                        <select name="capitulos-1" class="select-invisivel">
-                                            <% for( let index = 0; index < link.cap_total; index++ ) { %>
-                                                <option value="<%= index + 1 %>" <% if (index + 1 === link.cap_atual) { %> selected <% } %> ><%= index + 1 %></option>
-                                            <% } %>
-                                        </select>
+                                        <div class="chapter-control">
+                                            <button class="btn-cap">-</button>
+                                            <select name="capitulos-1" class="select-invisivel">
+                                                <% for( let index = 0; index < link.cap_total; index++ ) { %>
+                                                    <option value="<%= index + 1 %>" <% if (index + 1 === link.cap_atual) { %> selected <% } %> ><%= index + 1 %></option>
+                                                    <% } %>
+                                            </select>
+                                            <button class="btn-cap">+</button>
+                                        </div>
+                                        
                                     </th>
-                                    <th><%= link.cap_total %></th>
+                                    <th class="coluna-pequena" ><%= link.cap_total %></th>
                                 </tr>
                             <% }) %>
 
@@ -84,9 +85,9 @@
                             <div class="form-group">
                                 <label for="idioma">Idioma</label>
                                 <select id="idioma" name="idioma" class="select-invisivel" style="color-scheme: dark;">
-                                    <option value="pt-br">PT-BR</option>
-                                    <option value="en">EN</option>
-                                    <option value="es">ES</option>
+                                    <option value="PT-BR">PT-BR</option>
+                                    <option value="EN">EN</option>
+                                    <option value="ES">ES</option>
                                 </select>
                             </div>
                             <div class="form-group">

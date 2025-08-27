@@ -13,13 +13,13 @@
     ],
     "links": [
       {
-        "idioma": "pt-br",
+        "idioma": "PT-BR",
         "url": "https://mangadex.org/title/12345/solo-leveling",
         "cap_atual": 20,
         "cap_total": 100
       },
       {
-        "idioma": "en",
+        "idioma": "EN",
         "url": "https://www.webtoons.com/en/fantasy/solo-leveling/list?title_no=1234",
         "cap_atual": 30,
         "cap_total": 100
@@ -64,11 +64,12 @@
     "slug": "teste",
     "titulo": "teste",
     "autor": "teste",
-    "capa": "/images/1756153529447-fundo.jpg",
+    "capa": "https://res.cloudinary.com/dlwouwnen/image/upload/v1756260999/Biblioteca%20Manhwas/vbfxaokzek76rez1hbwj.png",
     "status": "Lendo",
-    "capitulos": "34",
+    "capitulos": "46",
     "tags": [
-      "ts"
+      "teste1",
+      "teste2"
     ],
     "links": []
   }

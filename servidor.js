@@ -3,7 +3,7 @@ const path = require('path')
 const app = express()
 const fs = require('fs')
 const multer = require('multer')
-require('dotenv').config();
+const { storage } = require('./config/cloudinary')
 
 const port = process.env.PORT || 3000
 
@@ -15,14 +15,15 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, 'public', 'images'))
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + '-' + file.originalname)
-    }
-})
+//PRA UPAR NAS PASTAS LOCAIS
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, path.join(__dirname, 'public', 'images'))
+//     },
+//     filename: (req, file, cb) => {
+//         cb(null, Date.now() + '-' + file.originalname)
+//     }
+// })
 
 const upload = multer({ storage })
 
@@ -73,7 +74,7 @@ app.post('/adicionar', upload.single('capa'), (req, res) => {
             return res.status(400).send('Erro ao fazer upload da imagem da capa')
         }
 
-        const capaPath = `/images/${req.file.filename}`
+        const capaPath = req.file.path
 
         const { titulo, autor, status, capitulos, tags } = req.body
         const novoManhwa = {

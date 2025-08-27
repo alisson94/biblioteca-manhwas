@@ -40,7 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnFecharModalLink = document.getElementById('btn-fechar-modal-link');
     const modalLink = document.getElementById('modal-adicionar-link');
     
-    console.log(btnAbrirModalLink)
     
     if (btnAbrirModalLink && btnFecharModalLink && modalLink) {
         const abrirModalLink = () => { modalLink.style.display = 'flex'; };
