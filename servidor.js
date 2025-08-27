@@ -24,7 +24,7 @@ app.set('views', path.join(__dirname, 'views'))
 //         cb(null, Date.now() + '-' + file.originalname)
 //     }
 // })
-
+//TESTE DEPLOY
 const upload = multer({ storage })
 
 app.get('/', (req, res) => {
