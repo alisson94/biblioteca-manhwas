@@ -4,9 +4,13 @@ const app = express()
 const fs = require('fs')
 const multer = require('multer')
 const { storage } = require('./config/cloudinary')
+const connectDB = require('./config/db')
+const manhwa = require('./models/Manhwa')
+const Manhwa = require('./models/Manhwa')
+
+connectDB()
 
 const port = process.env.PORT || 3000
-
 const dbPath = path.join(__dirname, 'manhwas.json')
 
 app.use(express.urlencoded({ extended: true }))
@@ -25,60 +29,46 @@ app.set('views', path.join(__dirname, 'views'))
 //     }
 // })
 //TESTE DEPLOY
+
 const upload = multer({ storage })
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
 
-    fs.readFile(dbPath, 'utf8', (err, data) => {
-        if (err) {
-            console.error('Erro ao ler o arquivo JSON:', err)
-            return res.status(500).send('Erro interno do servidor')
-        }
-
-        const manhwas = JSON.parse(data)
+    try{
+        const manhwas = await Manhwa.find()
         res.render('inicio', { manhwas })
-    })
+
+    }catch (error) {
+        console.error('Erro ao buscar manhwas:', error)
+        return res.status(500).send('Erro interno do servidor')
+    }
+
 })
 
-app.get('/manhwa/:slug', (req, res) => {
+app.get('/manhwa/:slug', async (req, res) => {
 
-    fs.readFile(dbPath, 'utf-8', (err, data)=> {
-        if (err) {
-            console.error('Erro ao ler o arquivo JSON:', err)
-            return res.status(500).send('Erro interno do servidor')
-        }
-        
-        const manhwas = JSON.parse(data)
-
-        const manhwa = manhwas.find(m => m.slug === req.params.slug)
+    try{
+        const manhwa = await Manhwa.findOne({ slug: req.params.slug })
         if (manhwa) {
             res.render('detalhes', { manhwa })
         } else {
             res.status(404).send('Manhwa não encontrado')
         }
-    })
+    }catch (error) {
+        console.error('Erro ao buscar manhwa:', error)
+        return res.status(500).send('Erro interno do servidor')
+    }
 
 })
 
-app.post('/adicionar', upload.single('capa'), (req, res) => {
+app.post('/adicionar', upload.single('capa'), async (req, res) => {
 
-    fs.readFile(dbPath, 'utf8', (err, data) => {
-        if (err) {
-            console.error('Erro ao ler o arquivo JSON:', err)
-            return res.status(500).send('Erro interno do servidor')
-        }
-        
-        const manhwas = JSON.parse(data)
-
-        if(!req.file){
-            return res.status(400).send('Erro ao fazer upload da imagem da capa')
-        }
-
+    try{
         const capaPath = req.file.path
 
         const { titulo, autor, status, capitulos, tags } = req.body
-        const novoManhwa = {
-            id: manhwas.length > 0 ? manhwas[manhwas.length - 1].id + 1 : 1,
+
+        const novoManhwa = new manhwa({
             slug: req.body.titulo.toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]+/g, ''),
             titulo,
             autor,
@@ -87,51 +77,47 @@ app.post('/adicionar', upload.single('capa'), (req, res) => {
             capitulos,
             tags: tags.split(',').map(tag => tag.trim()),
             links: []
-        }
-        manhwas.push(novoManhwa)
-
-        fs.writeFile(dbPath, JSON.stringify(manhwas, null, 2), 'utf8', (err) => {
-            if (err) {
-                console.error('Erro ao salvar o arquivo JSON:', err)
-                return res.status(500).send('Erro interno do servidor')
-            }
-            res.redirect('/')
         })
-    })
+
+        await novoManhwa.save()
+        //const manhwaSalvo = await novoManhwa.save()
+        //res.status(201).json(manhwaSalvo)
+        res.redirect('/')
+        
+
+    }catch (error) {
+        console.error('Erro ao adicionar manhwa:', error)
+        return res.status(500).send('Erro interno do servidor')
+    }
+
 })
 
-app.post('/manhwa/adicionar-link', (req, res) => {
-    const { manhwaSlug, idioma, url, cap_total } = req.body
+app.post('/manhwa/adicionar-link', async (req, res) => {
 
-    fs.readFile(dbPath, 'utf8', (err, data) => {
-        if (err) {
-            console.error('Erro ao ler o arquivo JSON:', err)
-            return res.status(500).send('Erro interno do servidor')
+    try{
+        const { manhwaSlug, idioma, url, cap_total } = req.body
+
+        const manhwa = await Manhwa.findOne({ slug: manhwaSlug })
+        if(!manhwa){
+            return res.status(404).send('Manhwa não encontrado')
         }
 
-        const manhwas = JSON.parse(data)
+        manhwa.links.push({
+            idioma,
+            url,
+            cap_atual: 1,
+            cap_total
+        })
 
-        const manhwa = manhwas.find( m => m.slug === manhwaSlug)
+        await manhwa.save()
+        res.redirect(`/manhwa/${manhwaSlug}`)
 
-        if (manhwa) {
-            manhwa.links.push({
-                idioma,
-                url,
-                cap_atual: 1,
-                cap_total
-            })
+    }catch(e){
+        console.error('Erro ao adicionar link:', e)
+        return res.status(500).send('Erro interno do servidor')
+    }
 
-            fs.writeFile(dbPath, JSON.stringify(manhwas, null, 2), 'utf8', (err) => {
-                if (err) {
-                    console.error('Erro ao salvar o arquivo JSON:', err)
-                    return res.status(500).send('Erro interno do servidor')
-                }
-                res.redirect(`/manhwa/${manhwaSlug}`)
-            })
-        } else {
-            res.status(404).send('Manhwa não encontrado')
-        }
-    })
+
 })
 
 app.listen(port, () => {
