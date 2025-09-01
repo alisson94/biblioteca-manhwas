@@ -47,20 +47,20 @@
                                         <%= link.idioma %>
                                     </th>
                                     <th> <a href="<%= link.url %>" target="_blank" rel="noopener noreferrer"><%= link.url %></a></th>
-                                    <th class="coluna-pequena coluna-centralizada">
+                                    <th class="coluna-pequena">
                                         <div class="chapter-control">
-                                            <button class="btn-cap">-</button>
+                                            <button class="btn-cap" >-</button>
                                             <select name="cap-atual" class="select-invisivel select-cap-atual" data-manhwa-slug="<%= manhwa.slug %>" data-link-url="<%= link.url %>">
                                                 <% for( let index = 0; index < link.cap_total; index++ ) { %>
                                                     <option value="<%= index + 1 %>" <% if (index + 1 === link.cap_atual) { %> selected <% } %> ><%= index + 1 %></option>
                                                     <% } %>
                                             </select>
                                             <span class="save-status"></span>
-                                            <button class="btn-cap">+</button>
+                                            <button class="btn-cap" data-cap-total ="<%= link.cap_total %>">+</button>
                                         </div>
                                         
                                     </th>
-                                    <th class="coluna-pequena" ><%= link.cap_total %></th>
+                                    <th class="coluna-pequena"><%= link.cap_total %></th>
                                 </tr>
                             <% }) %>
 

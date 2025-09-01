@@ -104,11 +104,37 @@ function mudarCapituloAtual() {
     })
 }
 
+function mudarCapituloAtualComBotao(){
+    const seletoresCapitulos = document.querySelectorAll('.select-cap-atual')
+    const botoesCapitulo = document.querySelectorAll('.btn-cap')
+
+
+    botoesCapitulo.forEach((botao, index) => {
+        botao.addEventListener('click', () => {
+
+            const select = seletoresCapitulos[parseInt(index/2)]
+            let novoValor = parseInt(select.value)
+
+            if (botao.textContent === '-') {
+                novoValor = Math.max(1, novoValor - 1)
+            } else {
+                novoValor = Math.min(botao.dataset.capTotal, novoValor + 1)
+            }
+
+            select.value = novoValor
+            select.dispatchEvent(new Event('change'))
+        })
+    })
+
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 
     mostrarModalAdicionarManhwa()
     mostrarModalAdicionarLink()
 
     mudarCapituloAtual()
+
+    mudarCapituloAtualComBotao()
 
 });
