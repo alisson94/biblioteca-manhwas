@@ -1,5 +1,4 @@
-
-document.addEventListener('DOMContentLoaded', () => {
+function mostrarModalAdicionarManhwa(){
     const btnAbrirModal1 = document.getElementsByClassName('btn-abrir-modal')[0];
     const btnAbrirModal2 = document.getElementsByClassName('btn-abrir-modal')[1];
     const btnFecharModal = document.getElementById('btn-fechar-modal');
@@ -34,8 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+}
 
-    // ----- LOGICA PARA MODAL DA PAG DETALHES -----
+function mostrarModalAdicionarLink(){
     const btnAbrirModalLink = document.getElementById('btn-abrir-modal-link');
     const btnFecharModalLink = document.getElementById('btn-fechar-modal-link');
     const modalLink = document.getElementById('modal-adicionar-link');
@@ -53,4 +53,62 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+}
+
+function mudarCapituloAtual() {
+    const seletoresCapitulos = document.querySelectorAll('.select-cap-atual')
+
+    seletoresCapitulos.forEach(select => {
+        select.addEventListener('change', async () => {
+            const statusSpan = select.nextElementSibling
+            const manhwaSlug = select.dataset.manhwaSlug
+            const manhwaLink = select.dataset.linkUrl
+            const novoValor = select.value
+
+            const toastSalvando = showToast("Salvando...", "info")
+
+            try{
+                const response = await fetch('/manhwa/atualizar-capitulo', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        manhwaSlug,
+                        manhwaLink,
+                        novoValor
+
+                    })
+                }) 
+
+                await response.json();
+
+                if(response.ok){
+                    toastSalvando.remove()
+                    showToast("Capítulo atualizado com sucesso!", "success");
+
+                }else{
+                    throw new Error("Erro ao salvar");
+                    
+                }
+            }catch(e){
+                console.error("Erro: ", e);
+                showToast("Erro ao salvar", "error");
+
+            }
+
+            setTimeout(()=>{
+                statusSpan.textContent = ''
+            }, 2000)
+        })
+    })
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    mostrarModalAdicionarManhwa()
+    mostrarModalAdicionarLink()
+
+    mudarCapituloAtual()
+
 });

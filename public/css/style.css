@@ -18,7 +18,9 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: var(--cor-fundo);
+    background-image: url('../images/fundo.jpg');
+    background-size: cover;
+    /* background-color: var(--cor-fundo); */
     color: var(--cor-texto);
     line-height: 1.6;
 }
@@ -240,6 +242,7 @@ main {
   -moz-appearance: none;
   appearance: none;
   background-color: transparent;
+  color-scheme: dark;
   
   width: 100%;
   max-width: 50px;
@@ -304,6 +307,59 @@ main {
     transform: scale(0.95);
 }
 
+/* --- COMPONENTE DE NOTIFICAÇÃO (TOAST) --- */
+
+/* Contêiner que posiciona as notificações no canto */
+.toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1001; /* Fica na frente do modal */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Estilo da notificação individual */
+.toast {
+    padding: 15px 20px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    opacity: 0; /* Começa invisível para a animação */
+    animation: slideInAndOut 4s ease-in-out forwards;
+}
+
+/* Cores para diferentes tipos de notificação */
+.toast.success {
+    background-color: #28a745; /* Verde */
+}
+
+.toast.error {
+    background-color: #dc3545; /* Vermelho */
+}
+
+.toast.info {
+    background-color: #17a2b8; /* Azul */
+}
+
+/* Animação de entrada e saída */
+@keyframes slideInAndOut {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    15%, 85% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
 /* --- RODAPÉ --- */
 footer {
     text-align: center;
@@ -311,6 +367,7 @@ footer {
     margin-top: 2rem;
     color: var(--cor-texto-secundario);
     border-top: 1px solid #333;
+    background-color: #1212128f;
 }
 
 

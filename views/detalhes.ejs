@@ -50,11 +50,12 @@
                                     <th class="coluna-pequena coluna-centralizada">
                                         <div class="chapter-control">
                                             <button class="btn-cap">-</button>
-                                            <select name="capitulos-1" class="select-invisivel">
+                                            <select name="cap-atual" class="select-invisivel select-cap-atual" data-manhwa-slug="<%= manhwa.slug %>" data-link-url="<%= link.url %>">
                                                 <% for( let index = 0; index < link.cap_total; index++ ) { %>
                                                     <option value="<%= index + 1 %>" <% if (index + 1 === link.cap_atual) { %> selected <% } %> ><%= index + 1 %></option>
                                                     <% } %>
                                             </select>
+                                            <span class="save-status"></span>
                                             <button class="btn-cap">+</button>
                                         </div>
                                         
@@ -85,9 +86,10 @@
                             <div class="form-group">
                                 <label for="idioma">Idioma</label>
                                 <select id="idioma" name="idioma" class="select-invisivel" style="color-scheme: dark;">
-                                    <option value="PT-BR">PT-BR</option>
+                                    <option value="PT">PT</option>
                                     <option value="EN">EN</option>
                                     <option value="ES">ES</option>
+                                    <option value="CH">CH</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -110,6 +112,7 @@
         <p>&copy; 2025 - Criado por <strong>Álisson</strong> com ❤️ para <strong>Emilin</strong></p>
     </footer>
 
+    <script src="/js/toast.js"></script>
     <script src="/js/main.js"></script>
 
 </body>

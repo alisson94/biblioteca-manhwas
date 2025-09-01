@@ -5,30 +5,19 @@ const fs = require('fs')
 const multer = require('multer')
 const { storage } = require('./config/cloudinary')
 const connectDB = require('./config/db')
-const manhwa = require('./models/Manhwa')
 const Manhwa = require('./models/Manhwa')
 
 connectDB()
 
 const port = process.env.PORT || 3000
-const dbPath = path.join(__dirname, 'manhwas.json')
 
 app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 
-//PRA UPAR NAS PASTAS LOCAIS
-// const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         cb(null, path.join(__dirname, 'public', 'images'))
-//     },
-//     filename: (req, file, cb) => {
-//         cb(null, Date.now() + '-' + file.originalname)
-//     }
-// })
-//TESTE DEPLOY
 
 const upload = multer({ storage })
 
@@ -118,6 +107,28 @@ app.post('/manhwa/adicionar-link', async (req, res) => {
     }
 
 
+})
+
+app.post('/manhwa/atualizar-capitulo', async (req, res) => {
+    try{
+        const { manhwaSlug, manhwaLink, novoValor } = req.body
+
+        const manhwa = await Manhwa.findOne({slug: manhwaSlug})
+        if (!manhwa) {
+            return res.status(404).json({ success: false, message: "Manhwa não encontrado" })
+        }
+        const link = manhwa.links.find(l => l.url === manhwaLink)
+        if (!link) {
+            return res.status(404).json({ success: false, message: "Link não encontrado" })
+        }
+        link.cap_atual = parseInt(novoValor)
+
+        await manhwa.save()
+        return res.json({ success: true, message: "Sucesso" })
+        
+    }catch(e){
+        console.error("Erro ao atualizar capitulo", e);
+    }
 })
 
 app.listen(port, () => {
