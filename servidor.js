@@ -55,11 +55,12 @@ app.post('/adicionar', upload.single('capa'), async (req, res) => {
     try{
         const capaPath = req.file.path
 
-        const { titulo, autor, status, capitulos, tags } = req.body
+        const { titulos, autor, status, capitulos, tags } = req.body
+
 
         const novoManhwa = new Manhwa({
-            slug: req.body.titulo.toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]+/g, ''),
-            titulo,
+            slug: req.body.titulos[0].toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]+/g, ''),
+            titulos,
             autor,
             capa: capaPath,
             status,

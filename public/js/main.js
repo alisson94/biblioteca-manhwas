@@ -128,6 +128,20 @@ function mudarCapituloAtualComBotao(){
 
 }
 
+function adicionarTitulo(){
+    const btnAdicionarTitulo = document.getElementById('btn-adicionar-titulo');
+
+    btnAdicionarTitulo.addEventListener('click', () => {
+        const titulosContainer = document.querySelector('.titulos-container');
+        const novoTitulo = document.createElement('input');
+        novoTitulo.type = 'text';
+        novoTitulo.name = 'titulos';
+        novoTitulo.placeholder = 'Outro título';
+        novoTitulo.required = true;
+        titulosContainer.appendChild(novoTitulo);
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 
     mostrarModalAdicionarManhwa()
@@ -136,5 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
     mudarCapituloAtual()
 
     mudarCapituloAtualComBotao()
+
+    adicionarTitulo()
 
 });

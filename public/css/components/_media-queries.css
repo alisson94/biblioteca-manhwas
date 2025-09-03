@@ -1,0 +1,21 @@
+/* --- MEDIA QUERIES PARA RESPONSIVIDADE --- */
+/* Para tablets e telas maiores */
+@media (min-width: 768px) {
+    .grid-manhwas {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+    
+    .detalhes-manhwa {
+        flex-direction: row; /* Layout de 2 colunas */
+        align-items: flex-start;
+    }
+    
+    .detalhes-capa {
+        flex-basis: 300px; /* Largura fixa para a coluna da capa */
+        flex-shrink: 0;
+    }
+
+    .detalhes-info {
+        flex-grow: 1; /* A coluna de info ocupa o resto do espaço */
+    }
+}

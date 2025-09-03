@@ -1,0 +1,11 @@
+/* --- VARIÁVEIS --- */
+:root {
+    --cor-fundo: #121212;
+    --cor-card: #1E1E1E;
+    --cor-destaque: #00A8FF;
+    --cor-texto: #EAEAEA;
+    --cor-texto-secundario: #A0A0A0;
+    --cor-sucesso: #4CAF50;
+    --cor-perigo: #F44336;
+    --sombra-card: 0 4px 15px rgba(0, 0, 0, 0.4);
+}

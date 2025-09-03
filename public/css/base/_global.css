@@ -1,0 +1,22 @@
+/* --- ESTILOS GLOBAIS --- */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-image: url('../../images/fundo.jpg');
+    background-size: cover;
+    /* background-color: var(--cor-fundo); */
+    color: var(--cor-texto);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+} 
+
+
+a {
+    color: var(--cor-destaque);
+    text-decoration: none;
+    
+}

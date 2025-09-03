@@ -1,0 +1,56 @@
+/* --- ESTILOS DO MODAL --- */
+
+.modal-overlay {
+    /* Fica escondido por padrão */
+    display: none; 
+
+    /* Posicionamento */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw; /* 100% da largura da tela */
+    height: 100vh; /* 100% da altura da tela */
+    z-index: 1000; /* Garante que fique na frente de tudo */
+
+    /* Aparência do fundo */
+    background-color: rgba(0, 0, 0, 0.7);
+
+    /* Centraliza o conteúdo (a caixa branca) */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: var(--cor-card, #1E1E1E);
+    padding: 2rem;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 750px; /* Largura máxima em telas grandes */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    position: relative;
+    max-height: 90vh; /* Altura máxima */
+    overflow-y: auto; /* Adiciona barra de rolagem se o conteúdo for muito grande */
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #444;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: var(--cor-destaque, #00A8FF);
+}
+
+.btn-close {
+    background: none;
+    border: none;
+    color: var(--cor-texto-secundario, #A0A0A0);
+    font-size: 2rem;
+    cursor: pointer;
+    line-height: 1;
+}

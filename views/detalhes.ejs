@@ -18,16 +18,22 @@
     <main class="container">
         <article class="detalhes-manhwa">
             <div class="detalhes-capa">
-                <img src="<%= manhwa.capa %>" alt="<%= manhwa.titulo %>">
+                <img src="<%= manhwa.capa %>" alt="<%= manhwa.titulos[0] %>">
             </div>
             <div class="detalhes-info">
-                <h1><%= manhwa.titulo %></h1>
+                <h1><%= manhwa.titulos[0] %></h1>
+                <div class="titulos-secundarios">
+                    <% for (let i = 1; i < manhwa.titulos.length; i++) {
+                        const titulo = manhwa.titulos[i];
+                        %>
+                        <span><%= titulo %></span>
+                    <% } %>
+                </div>
                 <div class="meta-info">
-                    <span><strong>Autor:</strong> <%= manhwa.autor %></span>
                     <span><strong>Status:</strong> <%= manhwa.status %></span>
                     <span><strong>Capítulos:</strong> <%= manhwa.capitulos %></span>
                 </div>
-                <h2>Links</h2>
+                
                 <div class="links">
                     <table>
                         <thead>

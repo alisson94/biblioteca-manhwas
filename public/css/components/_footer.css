@@ -1,0 +1,9 @@
+/* --- RODAPÉ --- */
+footer {
+    text-align: center;
+    padding: 2rem 0;
+    margin-top: 2rem;
+    color: var(--cor-texto-secundario);
+    border-top: 1px solid #333;
+    background-color: #1212128f;
+}

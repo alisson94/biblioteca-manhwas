@@ -1,0 +1,60 @@
+/* --- GRID DE MANHWAS --- */
+main {
+    padding-top: 10px;
+    padding: 2rem 0;
+}
+
+.grid-manhwas {
+    display: grid;
+    /* Mágica da responsividade: cria colunas de no mínimo 180px e no máximo 1 fração do espaço */
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1.5rem;
+}
+
+.manhwa-card {
+    background-color: var(--cor-card);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--sombra-card);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: var(--cor-texto);
+}
+
+.manhwa-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 25px rgba(0, 168, 255, 0.3);
+}
+
+.manhwa-card img {
+    width: 100%;
+    height: 250px; /* Altura fixa para as capas */
+    object-fit: cover; /* Garante que a imagem cubra a área sem distorcer */
+}
+
+.card-info {
+    padding: 1rem;
+}
+
+.card-info h3 {
+    font-size: 1.1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Adiciona "..." se o título for muito longo */
+}
+
+.tags {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tag {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.6rem;
+    background-color: #333;
+    border-radius: 12px;
+}
+
+.tag.status-lendo { background-color: var(--cor-destaque); color: #fff;}
+.tag.status-concluido { background-color: var(--cor-sucesso); color: #fff;}

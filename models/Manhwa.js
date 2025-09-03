@@ -1,17 +1,14 @@
 const mongoose = require('mongoose');
 
 const manhwaSchema = new mongoose.Schema({
-  titulo: {
+  titulos: [{
     type: String,
     required: true, 
-  },
+  }],
   slug:{
     type: String,
     required: true,
     unique: true, // Garante que o slug seja único
-  },
-  titulo: {
-
   },
   capa: {
     type: String,
