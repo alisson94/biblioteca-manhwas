@@ -81,6 +81,12 @@
     width: 150px;
 }
 
+/* GAMBIARRA */
+
+.links .coluna-delete {
+    width: 0px;  
+}
+
 .links .select-invisivel {
     color-scheme: dark;
   -webkit-appearance: none;
@@ -112,19 +118,6 @@
     margin-top: 2rem;
     display: flex;
     gap: 1rem;
-}
-
-.btn-secondary { 
-    background-color: var(--cor-destaque); 
-    color: #fff; 
-    padding: 0.7rem 1.5rem; 
-    border-radius: 5px;
-    font-family: inherit;
-    appearance: None;
-    border: none;
-    outline: none;
-    box-shadow: none;
-    cursor: pointer;
 }
 
 .chapter-control {
@@ -171,4 +164,38 @@
     flex-wrap: wrap;
     margin-bottom: 2rem;
 
+}
+
+.titulo-principal-container {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espaço entre o título e o botão */
+    margin-bottom: 10px; /* Ajuste o espaçamento conforme necessário */
+}
+
+.titulo-principal-container h1 {
+    margin-bottom: 0; /* Remove a margem padrão do h1 */
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cor-texto-secundario); /* Ou a cor que preferir */
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-icon:hover {
+    background-color: var(--cor-fundo-secundario); /* Cor de fundo no hover */
+    color: var(--cor-destaque); /* Cor do ícone no hover */
+}
+
+.btn-icon svg {
+    width: 20px; /* Tamanho do ícone */
+    height: 20px;
 }

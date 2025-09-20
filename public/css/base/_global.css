@@ -20,3 +20,51 @@ a {
     text-decoration: none;
     
 }
+
+.btn-primary {
+    background-color: var(--cor-destaque);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    appearance: None;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #007bb5;
+}
+
+.btn-secondary { 
+    background-color: var(--cor-destaque); 
+    color: #fff; 
+    padding: 0.7rem 1.5rem; 
+    border-radius: 5px;
+    font-family: inherit;
+    appearance: None;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.btn-delete {
+    background-color: var(--cor-perigo);
+    color: #fff;
+    padding: 0rem 0.5rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    font-size: 2rem;
+    appearance: None;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.btn-delete:hover {
+    background-color: #f17870;
+}

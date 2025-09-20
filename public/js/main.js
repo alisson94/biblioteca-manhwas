@@ -2,7 +2,7 @@ function mostrarModalAdicionarManhwa(){
     const btnAbrirModal1 = document.getElementsByClassName('btn-abrir-modal')[0];
     const btnAbrirModal2 = document.getElementsByClassName('btn-abrir-modal')[1];
     const btnFecharModal = document.getElementById('btn-fechar-modal');
-    const modal = document.getElementById('modal-adicionar');
+    const modal = document.getElementById('modal-manhwa');
 
     
     if (btnAbrirModal1 && btnAbrirModal2 && btnFecharModal && modal) {
@@ -142,6 +142,28 @@ function adicionarTitulo(){
     });
 }
 
+function mostrarModalAtualizarManhwa(){
+    const btnAbrirModalAtualizar = document.getElementById('btn-abrir-modal-atualizar');
+    const btnFecharModalAtualizar = document.getElementById('btn-fechar-modal');
+    const modalAtualizar = document.getElementById('modal-manhwa');
+
+
+    btnAbrirModalAtualizar.addEventListener('click', () => {
+        modalAtualizar.style.display = 'flex';
+    });
+
+    btnFecharModalAtualizar.addEventListener('click', () => {
+        modalAtualizar.style.display = 'none';
+    });
+
+    modalAtualizar.addEventListener('click', (event) => {
+        // Se o alvo do clique for o fundo cinza (o próprio modal-overlay)...
+        if (event.target === modalAtualizar) {
+            modalAtualizar.style.display = 'none';
+        }
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 
     mostrarModalAdicionarManhwa()
@@ -150,6 +172,8 @@ document.addEventListener('DOMContentLoaded', () => {
     mudarCapituloAtual()
 
     mudarCapituloAtualComBotao()
+
+    mostrarModalAtualizarManhwa()
 
     adicionarTitulo()
 

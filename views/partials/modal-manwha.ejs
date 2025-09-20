@@ -1,0 +1,48 @@
+<div id="modal-manhwa" class="modal-overlay">
+    <div class="modal-content">
+        <header class="modal-header">
+            <h2><%= modalTitulo %></h2>
+            <button id="btn-fechar-modal" class="btn-close">&times;</button>
+        </header>
+
+        <form action="<%= actionForm %>" method="POST" class="form-manhwa" enctype="multipart/form-data">
+            <div class="form-group">
+                <!-- <label for="titulo">Título</label>
+                <input type="text" id="titulo" name="titulo" required> -->
+                <label for="titulos">Títulos</label>
+                <div class="titulos-container">
+                    <% if (manhwa && manhwa.titulos && manhwa.titulos.length > 0) {
+                        manhwa.titulos.forEach(titulo => { %>
+                            <input type="text" name="titulos" value="<%= titulo %>" required>
+                    <%  }) 
+                        }else{ %>
+                            <input type="text" name="titulos" placeholder="Título principal" required>
+                    <% } %>
+                </div>
+                <button id="btn-adicionar-titulo" class="btn-secondary" type="button">Adicionar Título</button>
+            </div>
+            <div class="form-group">
+                <label for="capa">Imagem da Capa</label>
+                <input type="file" id="capa" name="capa" placeholder="/imagens/nome-do-arquivo.jpg" <%= manhwa ? '' : 'required' %> accept="image/png, image/jpeg, image/webp">
+            </div>
+            <div class="form-group">
+                <label for="capitulos">Total de capítulos</label>
+                <input type="number" id="capitulos" name="capitulos" value="<%= manhwa ? manhwa.capitulos : '' %>" required>
+            </div>
+            <div class="form-group">
+                <label for="status">Status</label>
+                <select id="status" name="status">
+                    <option value="Lendo" <%= manhwa && manhwa.status === 'Lendo' ? 'selected' : '' %>>Lendo</option>
+                    <option value="Concluído" <%= manhwa && manhwa.status === 'Concluído' ? 'selected' : '' %>>Concluído</option>
+                    <option value="Planejo Ler" <%= manhwa && manhwa.status === 'Planejo Ler' ? 'selected' : '' %>>Planejo Ler</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="tags">Tags (separado por vírgula)</label>
+                <input type="text" id="tags" name="tags" value="<%= manhwa ? manhwa.tags.join(', ') : '' %>" placeholder="Ex: Ação, Aventura" required>
+            </div>
+
+            <button type="submit" class="btn-primary"><%= textBotao %></button>
+        </form>
+    </div>
+</div>

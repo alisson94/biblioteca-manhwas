@@ -6,6 +6,7 @@ const multer = require('multer')
 const { storage } = require('./config/cloudinary')
 const connectDB = require('./config/db')
 const Manhwa = require('./models/Manhwa')
+const { isGeneratorFunction } = require('util/types')
 
 connectDB()
 
@@ -50,18 +51,18 @@ app.get('/manhwa/:slug', async (req, res) => {
 
 })
 
+//ADICIONAR MANHWA
 app.post('/adicionar', upload.single('capa'), async (req, res) => {
 
     try{
         const capaPath = req.file.path
 
-        const { titulos, autor, status, capitulos, tags } = req.body
+        const { titulos, status, capitulos, tags } = req.body
 
 
         const novoManhwa = new Manhwa({
             slug: req.body.titulos[0].toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]+/g, ''),
             titulos,
-            autor,
             capa: capaPath,
             status,
             capitulos,
@@ -82,6 +83,41 @@ app.post('/adicionar', upload.single('capa'), async (req, res) => {
 
 })
 
+//ATUALIZAR MANHWA
+app.post('/manhwa/atualizar/:slug', upload.single('capa'), async (req, res) => {
+    try {
+        const { slug } = req.params
+
+        const capaPath = req.file ? req.file.path : null
+
+        const { titulos, status, capitulos, tags } = req.body
+
+        const novoManhwa = {
+            titulos,
+            status,
+            capitulos,
+            tags: tags.split(',').map(tag => tag.trim())
+        }
+
+        if(capaPath){
+            novoManhwa.capa = capaPath
+        }
+
+        const manhwa = await Manhwa.findOneAndUpdate({ slug }, novoManhwa, { new: true })
+
+        if (!manhwa) {
+            return res.status(404).send('Manhwa não encontrado')
+        }
+
+        res.redirect(`/manhwa/${manhwa.slug}`)
+
+    } catch (error) {
+        console.error('Erro ao atualizar manhwa:', error)
+        return res.status(500).send('Erro interno do servidor')
+    }
+})
+
+//ADICIONAR LINK
 app.post('/manhwa/adicionar-link', async (req, res) => {
 
     try{
@@ -110,6 +146,7 @@ app.post('/manhwa/adicionar-link', async (req, res) => {
 
 })
 
+//ATUALIZAR CAPITULO
 app.post('/manhwa/atualizar-capitulo', async (req, res) => {
     try{
         const { manhwaSlug, manhwaLink, novoValor } = req.body
@@ -131,6 +168,8 @@ app.post('/manhwa/atualizar-capitulo', async (req, res) => {
         console.error("Erro ao atualizar capitulo", e);
     }
 })
+
+
 
 app.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${port}`)
