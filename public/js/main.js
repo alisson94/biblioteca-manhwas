@@ -37,18 +37,17 @@ function mostrarModalAdicionarManhwa(){
 
 function mostrarModalAdicionarLink(){
     const btnAbrirModalLink = document.getElementById('btn-abrir-modal-link');
-    const btnFecharModalLink = document.getElementById('btn-fechar-modal-link');
-    const modalLink = document.getElementById('modal-adicionar-link');
+    const modalLinkAdicionar = document.querySelector('.modal-link-adicionar');
+    const btnFecharModalLink = modalLinkAdicionar.querySelector('.btn-fechar-modal-link');
     
-    
-    if (btnAbrirModalLink && btnFecharModalLink && modalLink) {
-        const abrirModalLink = () => { modalLink.style.display = 'flex'; };
-        const fecharModalLink = () => { modalLink.style.display = 'none'; };
+    if (btnAbrirModalLink && btnFecharModalLink && modalLinkAdicionar) {
+        const abrirModalLink = () => { modalLinkAdicionar.style.display = 'flex'; };
+        const fecharModalLink = () => { modalLinkAdicionar.style.display = 'none'; };
 
         btnAbrirModalLink.addEventListener('click', abrirModalLink);
         btnFecharModalLink.addEventListener('click', fecharModalLink);
-        modalLink.addEventListener('click', (event) => {
-            if (event.target === modalLink) {
+        modalLinkAdicionar.addEventListener('click', (event) => {
+            if (event.target === modalLinkAdicionar) {
                 fecharModalLink();
             }
         });
@@ -164,10 +163,72 @@ function mostrarModalAtualizarManhwa(){
     });
 }
 
+function mostrarModalAtualizarLink() {
+    const botoesAtualizarLink = document.querySelectorAll('.btn-abrir-modal-atualizar-link');
+    const modalLinkAtualizar = document.querySelector('.modal-link-atualizar');
+    
+    if (!modalLinkAtualizar) {
+        console.error("Modal de atualização de link não encontrado!");
+        return;
+    }
+    
+    const btnFecharModalLink = modalLinkAtualizar.querySelector('.btn-fechar-modal-link');
+    
+    if (botoesAtualizarLink && btnFecharModalLink) {
+        // Função para fechar o modal
+        const fecharModalLink = () => { 
+            modalLinkAtualizar.style.display = 'none'; 
+        };
+        
+        // Adicionar evento para cada botão de atualizar link
+        botoesAtualizarLink.forEach(botao => {
+            botao.addEventListener('click', () => {
+                // Buscar os dados do link correspondente
+                const linkId = botao.id;
+                const linkRow = botao.closest('tr');
+                
+                // Obter os valores atuais da linha da tabela
+                const idioma = linkRow.cells[0].textContent.trim();
+                const url = linkRow.cells[1].querySelector('a').href;
+                const capTotal = linkRow.cells[3].textContent.trim();
+                
+                // Preencher o formulário com os valores atuais
+                const linkIdInput = modalLinkAtualizar.querySelector('#link-id-input');
+                const idiomaSelect = modalLinkAtualizar.querySelector('#idioma');
+                const urlInput = modalLinkAtualizar.querySelector('#url');
+                const capTotalInput = modalLinkAtualizar.querySelector('#cap_total');
+                
+                if (linkIdInput && idiomaSelect && urlInput && capTotalInput) {
+                    linkIdInput.value = linkId;
+                    idiomaSelect.value = idioma;
+                    urlInput.value = url;
+                    capTotalInput.value = capTotal;
+                    
+                    // Exibir o modal
+                    modalLinkAtualizar.style.display = 'flex';
+                } else {
+                    console.error("Não foi possível encontrar todos os campos no formulário");
+                }
+            });
+        });
+        
+        // Fechar o modal com o botão de fechar
+        btnFecharModalLink.addEventListener('click', fecharModalLink);
+        
+        // Fechar o modal ao clicar fora dele
+        modalLinkAtualizar.addEventListener('click', (event) => {
+            if (event.target === modalLinkAtualizar) {
+                fecharModalLink();
+            }
+        });
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 
     mostrarModalAdicionarManhwa()
     mostrarModalAdicionarLink()
+    mostrarModalAtualizarLink() // Nova função para atualizar links
 
     mudarCapituloAtual()
 

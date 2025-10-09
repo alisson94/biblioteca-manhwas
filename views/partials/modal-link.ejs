@@ -1,0 +1,33 @@
+<div id="modal-link" class="<%= link === true ? 'modal-link-atualizar' : 'modal-link-adicionar' %> modal-overlay">
+    <div class="modal-content">
+        <header class="modal-header">
+            <h2><%= modalTitulo %></h2>
+            <button class="btn-fechar-modal-link btn-close">&times;</button>
+        </header>
+        
+        <form action="<%= modalAction %>" method="POST" class="form-manhwa">
+
+            <input type="hidden" name="manhwaSlug" value="<%= manhwa.slug %>">
+            <input type="hidden" name="linkId" id="link-id-input" value="">
+
+            <div class="form-group">
+                <label for="idioma">Idioma</label>
+                <select id="idioma" name="idioma" class="select-invisivel" style="color-scheme: dark;">
+                    <option value="PT">PT</option>
+                    <option value="EN">EN</option>
+                    <option value="ES">ES</option>
+                    <option value="CH">CH</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="url">URL do Link</label>
+                <input type="url" id="url" name="url" placeholder="https://..." required>
+            </div>
+            <div class="form-group">
+                <label for="cap_total">Caps. Totais</label>
+                <input type="number" id="cap_total" name="cap_total" min="1" value="100" required>
+            </div>
+            <button type="submit" class="btn-primary"><%= modalButton %></button>
+        </form>
+    </div>
+</div>

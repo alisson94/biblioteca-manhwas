@@ -146,6 +146,41 @@ app.post('/manhwa/adicionar-link', async (req, res) => {
 
 })
 
+
+
+
+//ATUALIZAR LINK
+app.post('/manhwa/atualizar-link', async (req, res) => {
+    try {
+        const { manhwaSlug, linkId, idioma, url, cap_total } = req.body;
+
+        // Buscar o manhwa pelo slug
+        const manhwa = await Manhwa.findOne({ slug: manhwaSlug });
+        if (!manhwa) {
+            return res.status(404).send('Manhwa não encontrado');
+        }
+
+        // Encontrar o link pelo ID
+        const link = manhwa.links.id(linkId);
+        if (!link) {
+            return res.status(404).send('Link não encontrado');
+        }
+
+        // Atualizar os dados do link
+        link.idioma = idioma;
+        link.url = url;
+        link.cap_total = cap_total;
+
+        // Salvar as alterações
+        await manhwa.save();
+        res.redirect(`/manhwa/${manhwaSlug}`);
+
+    } catch (error) {
+        console.error('Erro ao atualizar link:', error);
+        return res.status(500).send('Erro interno do servidor');
+    }
+});
+
 //ATUALIZAR CAPITULO
 app.post('/manhwa/atualizar-capitulo', async (req, res) => {
     try{

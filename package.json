@@ -5,6 +5,7 @@
   "main": "servidor.js",
   "scripts": {
     "start": "node servidor.js",
+    "dev": "nodemon servidor.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -17,6 +18,7 @@
     "express": "^5.1.0",
     "mongoose": "^8.18.0",
     "multer": "^2.0.2",
-    "multer-storage-cloudinary": "^4.0.0"
+    "multer-storage-cloudinary": "^4.0.0",
+    "nodemon": "^3.1.10"
   }
 }
