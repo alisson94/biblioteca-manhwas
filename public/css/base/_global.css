@@ -1,5 +1,13 @@
 /* --- ESTILOS GLOBAIS --- */
+
+/* Regra geral para elementos clicáveis */
+button, input[type="submit"], input[type="button"], select, [role="button"], [tabindex="0"] {
+    cursor: url('../../images/cursor-pointer.png'), pointer;
+}
+
 body {
+    cursor: url('../../images/cursor.png'), auto;
+
     font-family: 'Poppins', sans-serif;
     background-image: url('../../images/fundo.jpg');
     background-size: cover;
@@ -18,7 +26,7 @@ body {
 a {
     color: var(--cor-destaque);
     text-decoration: none;
-    
+    cursor: url('../../images/cursor-pointer.png'), pointer;
 }
 
 .btn-primary {
@@ -31,7 +39,7 @@ a {
     border: none;
     outline: none;
     box-shadow: none;
-    cursor: pointer;
+    cursor: url('../../images/cursor-pointer.png'), pointer;
 }
 
 .btn-primary:hover {
@@ -48,7 +56,7 @@ a {
     border: none;
     outline: none;
     box-shadow: none;
-    cursor: pointer;
+    cursor: url('../../images/cursor-pointer.png'), pointer;
 }
 
 .btn-delete {
@@ -62,7 +70,7 @@ a {
     border: none;
     outline: none;
     box-shadow: none;
-    cursor: pointer;
+    cursor: url('../../images/cursor-pointer.png'), pointer;
 }
 
 .btn-delete:hover {
@@ -81,7 +89,7 @@ a {
     border: none;
     outline: none;
     box-shadow: none;
-    cursor: pointer;
+    cursor: url('../../images/cursor-pointer.png'), pointer;
 }
 
 .btn-edit:hover {

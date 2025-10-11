@@ -51,6 +51,6 @@
     border: none;
     color: var(--cor-texto-secundario, #A0A0A0);
     font-size: 2rem;
-    cursor: pointer;
+    /* cursor: pointer; */
     line-height: 1;
 }
