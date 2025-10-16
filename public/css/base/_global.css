@@ -95,3 +95,23 @@ a {
 .btn-edit:hover {
     background-color: #3c00c9;
 }
+
+/* Estilo para as partículas do efeito */
+.particle {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none; /* Impede que as partículas interfiram com o mouse */
+    opacity: 0;
+    z-index: 10; /* Ajuste o z-index conforme necessário */
+    transform: translate(-50%, -50%);
+}
+
+.sparkle {
+    position: fixed;
+    left: 0;
+    top: 0;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    /* z-index: -1; Garante que as partículas fiquem atrás do conteúdo */
+}

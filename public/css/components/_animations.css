@@ -1,0 +1,96 @@
+/* --- EFEITOS ESSENCIAIS --- */
+
+/* Estilização das barras de rolagem */
+/* Webkit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--cor-fundo-secundario);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, var(--cor-destaque), #007bb5);
+    border-radius: 10px;
+    border: 2px solid var(--cor-fundo-secundario);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(45deg, #007bb5, var(--cor-destaque));
+}
+
+::-webkit-scrollbar-corner {
+    background: var(--cor-fundo-secundario);
+}
+
+/* Firefox */
+html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--cor-destaque) var(--cor-fundo-secundario);
+}
+
+/* Efeitos de hover para botões */
+.btn-primary,
+.btn-secondary,
+.btn-delete,
+.btn-edit {
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover,
+.btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 8px 25px rgba(0, 168, 255, 0.4),
+        0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.btn-delete:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 8px 25px rgba(244, 67, 54, 0.4),
+        0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.btn-edit:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 8px 25px rgba(0, 168, 255, 0.4),
+        0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Animações de entrada da página */
+/* header {
+    animation: fadeInDown 0.8s ease-out;
+}
+
+.manhwa-card {
+    opacity: 0;
+    animation: fadeInDown 0.8s ease-out forwards;
+}
+
+.fab {
+    opacity: 0;
+    animation: fadeIn 0.6s ease-out 0.8s forwards;
+} */
+
+/* Smooth scroll */
+html {
+    scroll-behavior: smooth;
+}

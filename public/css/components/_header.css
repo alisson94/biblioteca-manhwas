@@ -1,6 +1,6 @@
 /* --- CABEÇALHO --- */
 header {
-    background-color: var(--cor-card);
+    background-color: #1212128f;
     padding: 1rem 0;
     border-bottom: 1px solid #333;
     position: sticky;

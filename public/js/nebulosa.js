@@ -1,0 +1,83 @@
+// Seleciona todos os cartões que devem ter o efeito
+const cards = document.querySelectorAll('.particle-card');
+
+// Para cada cartão, gerenciamos um intervalo separado
+cards.forEach(card => {
+    let particleInterval = null;
+    let zIndexOriginal = window.getComputedStyle(card).zIndex;
+
+    function startParticles() {
+        // evita múltiplos intervals para o mesmo cartão
+        if (particleInterval) return;
+
+        card.style.zIndex = 11;
+
+        particleInterval = setInterval(() => {
+            const rect = card.getBoundingClientRect();
+            let x, y;
+            const offset = 20
+            const side = Math.floor(Math.random() * 4);
+            if (side === 0) { x = rect.left + Math.random() * rect.width; y = rect.top + offset; }
+            else if (side === 1) { x = rect.right - offset; y = rect.top + Math.random() * rect.height; }
+            else if (side === 2) { x = rect.left + Math.random() * rect.width; y = rect.bottom - offset; }
+            else { x = rect.left + offset; y = rect.top + Math.random() * rect.height; }
+            createParticle(x, y, rect);
+        }, 15); // 30ms para reduzir quantidade excessiva de partículas
+    }
+
+    function stopParticles() {
+        if (!particleInterval) return;
+        clearInterval(particleInterval);
+        particleInterval = null;
+        card.style.zIndex = zIndexOriginal;
+    }
+
+    card.addEventListener('mouseenter', startParticles);
+    card.addEventListener('mouseleave', stopParticles);
+    // suporte a toque (mobile)
+    card.addEventListener('touchstart', startParticles, { passive: true });
+    card.addEventListener('touchend', stopParticles);
+});
+
+// Função que cria e anima cada partícula
+function createParticle(x, y, cardRect) {
+    const particle = document.createElement('div');
+    particle.classList.add('particle');
+    document.body.appendChild(particle);
+
+    const size = Math.random() * 35 + 10;
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+    
+    const hue = 190 + Math.random() * 50;
+    const color = `hsl(${hue}, 90%, 70%)`;
+    particle.style.backgroundColor = color;
+    particle.style.boxShadow = `0 0 15px ${color}, 0 0 25px ${color}`;
+    particle.style.filter = 'blur(10px)';
+    particle.style.left = `${x}px`;
+    particle.style.top = `${y}px`;
+
+    const cardCenterX = cardRect.left + cardRect.width / 2;
+    const cardCenterY = cardRect.top + cardRect.height / 2;
+    const vectorX = x - cardCenterX;
+    const vectorY = y - cardCenterY;
+    const length = Math.sqrt(vectorX * vectorX + vectorY * vectorY);
+    const directionX = vectorX / length;
+    const directionY = vectorY / length;
+    const travelDistance = Math.random() * 50 + 20;
+    const destinationX = directionX * travelDistance;
+    const destinationY = directionY * travelDistance;
+
+    const animation = particle.animate([
+        { transform: 'translate(-50%, -50%) scale(0.5)', opacity: 0 },
+        { opacity: 1, offset: 0.1 },
+        { transform: `translate(calc(-50% + ${destinationX}px), calc(-50% + ${destinationY}px)) scale(1.5)`, opacity: 0 }
+    ], {
+        duration: 2000,
+        easing: 'cubic-bezier(0.1, .9, .57, 1)'
+    });
+
+    animation.onfinish = () => {
+        particle.remove();
+    };
+}
