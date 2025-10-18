@@ -27,7 +27,7 @@ function createSparkle(x, y) {
     sparkle.style.height = `${size}px`;
     
     // Define a cor (branco/amarelado) e o brilho
-    const color = `hsl(50, 100%, 95%)`;
+    const color = `hsla(268, 100%, 66%, 1.00)`;
     sparkle.style.backgroundColor = color;
     sparkle.style.boxShadow = `0 0 8px ${color}, 0 0 12px #fff`;
     sparkle.style.filter = 'blur(1px)';
@@ -44,7 +44,7 @@ function createSparkle(x, y) {
         { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
         { transform: `translate(calc(-50% + ${destinationX}px), calc(-50% + ${destinationY}px)) scale(0)`, opacity: 0 }
     ], {
-        duration: Math.random() * 1000 + 800, // Duração aleatória para um efeito mais natural
+        duration: Math.random() * 1200 + 1000, // Duração aleatória para um efeito mais natural
         easing: 'ease-in' // Começa devagar e acelera, como se estivesse caindo
     });
 
