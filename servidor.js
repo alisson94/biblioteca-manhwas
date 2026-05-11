@@ -14,9 +14,25 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(express.static(path.join(__dirname, 'public')))
 
+app.use('/api', (req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', process.env.CLIENT_ORIGIN || '*')
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS')
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(204)
+    }
+
+    return next()
+})
+
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 
+
+app.get('/api/health', (req, res) => {
+    return res.json({ success: true, status: 'ok', service: 'biblioteca-manhwas-api' })
+})
 
 app.use('/', webManhwasRoutes)
 

@@ -38,8 +38,46 @@ function parseNumber(value) {
 
 async function listManhwas(req, res, next) {
   try {
-    const manhwas = await Manhwa.find().sort({ createdAt: -1 });
-    return res.json({ success: true, data: manhwas });
+    const { search, status, tag } = req.query;
+    const page = Math.max(parseNumber(req.query.page) || 1, 1);
+    const limit = Math.min(Math.max(parseNumber(req.query.limit) || 12, 1), 100);
+    const filter = {};
+
+    if (status) {
+      filter.status = status;
+    }
+
+    if (tag) {
+      filter.tags = tag;
+    }
+
+    if (search) {
+      const safeSearch = String(search).trim();
+      filter.$or = [
+        { slug: new RegExp(safeSearch, 'i') },
+        { titulos: new RegExp(safeSearch, 'i') },
+        { tags: new RegExp(safeSearch, 'i') },
+      ];
+    }
+
+    const [manhwas, total] = await Promise.all([
+      Manhwa.find(filter)
+        .sort({ createdAt: -1 })
+        .skip((page - 1) * limit)
+        .limit(limit),
+      Manhwa.countDocuments(filter),
+    ]);
+
+    return res.json({
+      success: true,
+      data: manhwas,
+      meta: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit) || 0,
+      },
+    });
   } catch (error) {
     return next(error);
   }

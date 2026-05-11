@@ -7,55 +7,71 @@ function toNumberOrNull(value) {
   return Number.isNaN(parsed) ? null : parsed;
 }
 
-function normalizeLink(link) {
-  let changed = false;
+function parseLegacyStringLink(value) {
+  if (typeof value !== 'string') {
+    return null;
+  }
 
-  if (typeof link.idioma === 'string') {
-    const idioma = link.idioma.trim();
-    if (idioma !== link.idioma) {
-      link.idioma = idioma;
-      changed = true;
+  const text = value.trim();
+  if (!text.startsWith('@{') || !text.endsWith('}')) {
+    return null;
+  }
+
+  const body = text.slice(2, -1);
+  const parts = body.split(';').map((part) => part.trim()).filter(Boolean);
+  const link = {};
+
+  for (const part of parts) {
+    const separatorIndex = part.indexOf('=');
+    if (separatorIndex === -1) {
+      continue;
     }
+
+    const key = part.slice(0, separatorIndex).trim();
+    const rawValue = part.slice(separatorIndex + 1).trim();
+    link[key] = rawValue;
   }
 
-  if (typeof link.url === 'string') {
-    const url = link.url.trim();
-    if (url !== link.url) {
-      link.url = url;
-      changed = true;
-    }
+  if (!link.idioma || !link.url) {
+    return null;
   }
 
-  if (typeof link.captora !== 'undefined' && typeof link.cap_total === 'undefined') {
-    link.cap_total = link.captora;
-    changed = true;
-  }
-
-  const capTotal = toNumberOrNull(link.cap_total);
   const capAtual = toNumberOrNull(link.cap_atual);
+  const capTotal = toNumberOrNull(link.cap_total ?? link.captora);
 
-  if (capTotal === null || capTotal < 1) {
-    link.cap_total = capAtual && capAtual > 0 ? capAtual : 1;
-    changed = true;
-  } else if (capTotal !== link.cap_total) {
-    link.cap_total = capTotal;
-    changed = true;
+  return {
+    idioma: String(link.idioma).trim(),
+    url: String(link.url).trim(),
+    cap_atual: capAtual && capAtual > 0 ? capAtual : 1,
+    cap_total: capTotal && capTotal > 0 ? capTotal : 1,
+  };
+}
+
+function normalizeLinkValue(link) {
+  const parsed = typeof link === 'string' ? parseLegacyStringLink(link) : link;
+
+  if (!parsed || typeof parsed !== 'object') {
+    return null;
   }
 
-  if (capAtual === null || capAtual < 1) {
-    link.cap_atual = 1;
-    changed = true;
-  } else if (capAtual !== link.cap_atual) {
-    link.cap_atual = capAtual;
-    changed = true;
+  const idioma = typeof parsed.idioma === 'string' ? parsed.idioma.trim() : '';
+  const url = typeof parsed.url === 'string' ? parsed.url.trim() : '';
+  const capAtual = toNumberOrNull(parsed.cap_atual);
+  const capTotal = toNumberOrNull(parsed.cap_total ?? parsed.captora);
+
+  if (!idioma || !url) {
+    return null;
   }
 
-  if (link.cap_atual > link.cap_total) {
-    link.cap_atual = link.cap_total;
-    changed = true;
-  }
+  const normalizedCapTotal = capTotal && capTotal > 0 ? capTotal : 1;
+  const normalizedCapAtual = capAtual && capAtual > 0 ? Math.min(capAtual, normalizedCapTotal) : 1;
 
-  return changed;
+  return {
+    idioma,
+    url,
+    cap_atual: normalizedCapAtual,
+    cap_total: normalizedCapTotal,
+  };
 }
 
 async function run() {
@@ -72,13 +88,25 @@ async function run() {
       continue;
     }
 
-    manhwa.links.forEach((link) => {
-      const changed = normalizeLink(link);
-      if (changed) {
+    const normalizedLinks = [];
+
+    for (const link of manhwa.links) {
+      const normalized = normalizeLinkValue(link);
+      if (normalized) {
+        normalizedLinks.push(normalized);
+        if (JSON.stringify(normalized) !== JSON.stringify(link)) {
+          docChanged = true;
+          updatedLinks += 1;
+        }
+      } else {
         docChanged = true;
-        updatedLinks += 1;
       }
-    });
+    }
+
+    if (normalizedLinks.length !== manhwa.links.length || JSON.stringify(normalizedLinks) !== JSON.stringify(manhwa.links)) {
+      manhwa.links = normalizedLinks;
+      docChanged = true;
+    }
 
     if (docChanged) {
       await manhwa.save();
