@@ -1,54 +1,69 @@
 const mongoose = require('mongoose');
 
-const manhwaSchema = new mongoose.Schema({
-  titulos: [{
-    type: String,
-    required: true, 
-  }],
-  slug:{
+const linkSchema = new mongoose.Schema({
+  idioma: {
     type: String,
     required: true,
-    unique: true, // Garante que o slug seja único
+    trim: true,
   },
-  capa: {
+  url: {
     type: String,
     required: true,
+    trim: true,
   },
-  status: {
-    type: String,
-    //enum: ['em andamento', 'concluído', 'pausado'],
-    //default: 'em andamento',
-  },
-  capitulos: {
+  cap_atual: {
     type: Number,
     required: true,
+    min: 1,
+    default: 1,
   },
-  tags: {
-    type: [String],
+  cap_total: {
+    type: Number,
     required: true,
-  },
-  links: [{
-    idioma: {
-      type: String,
-      required: true,
-    },
-    url: {
-      type: String,
-      required: true,
-    },
-    cap_atual: {
-      type: Number,
-      required: true,
-    },
-    cap_total: {
-      type: Number,
-      required: true,
-    },
-  }],
-  createdAt: {
-    type: Date,
-    default: Date.now, // Data de criação automática
+    min: 1,
   },
 });
+
+const manhwaSchema = new mongoose.Schema(
+  {
+    titulos: [
+      {
+        type: String,
+        required: true,
+        trim: true,
+      },
+    ],
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      lowercase: true,
+    },
+    capa: {
+      type: String,
+      required: true,
+    },
+    status: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    capitulos: {
+      type: Number,
+      required: true,
+      min: 1,
+    },
+    tags: {
+      type: [String],
+      required: true,
+      default: [],
+    },
+    links: [linkSchema],
+  },
+  {
+    timestamps: true,
+  }
+);
 
 module.exports = mongoose.model('Manhwa', manhwaSchema);
