@@ -1,0 +1,28 @@
+/* --- VARIÁVEIS --- */
+:root {
+  --cor-fundo: #121212;
+  --cor-fundo-secundario: #1f1f1f;
+  --cor-card: #1e1e1e;
+  --cor-destaque: #00a8ff;
+  --cor-texto: #eaeaea;
+  --cor-texto-secundario: #a0a0a0;
+  --cor-sucesso: #4caf50;
+  --cor-perigo: #f44336;
+  --cor-aviso: #ff9800;
+  --cor-info: #17a2b8;
+  --sombra-card: 0 4px 15px rgba(0, 0, 0, 0.4);
+  --sombra-destaque: 0 8px 25px rgba(0, 168, 255, 0.3);
+  --sombra-modal: 0 5px 15px rgba(0, 0, 0, 0.5);
+  --transicao-padrao: 0.3s ease;
+  --border-radius-padrao: 8px;
+  --border-radius-pequeno: 5px;
+  --border-radius-redondo: 12px;
+}
+
+/* Suporte para prefers-color-scheme (futuro) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --cor-fundo: #0a0a0a;
+    --cor-fundo-secundario: #1a1a1a;
+  }
+}

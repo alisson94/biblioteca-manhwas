@@ -1,0 +1,114 @@
+/* --- ESTILOS BASE --- */
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  line-height: 1.6;
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--cor-destaque) var(--cor-fundo-secundario);
+}
+
+/* Webkit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--cor-fundo-secundario);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, var(--cor-destaque), #007bb5);
+  border-radius: 10px;
+  border: 2px solid var(--cor-fundo-secundario);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #007bb5, var(--cor-destaque));
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--cor-fundo-secundario);
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Links */
+a {
+  color: var(--cor-destaque);
+  transition: opacity var(--transicao-padrao);
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+/* Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+h4 {
+  font-size: 1.25rem;
+}
+
+h5 {
+  font-size: 1.1rem;
+}
+
+h6 {
+  font-size: 1rem;
+}
+
+/* Paragraphs */
+p {
+  margin-bottom: 1rem;
+}
+
+/* Main */
+main {
+  min-height: calc(100vh - 200px);
+  padding: 2rem 0;
+}
+
+/* Selection */
+::selection {
+  background-color: var(--cor-destaque);
+  color: #fff;
+}
+
+::-moz-selection {
+  background-color: var(--cor-destaque);
+  color: #fff;
+}

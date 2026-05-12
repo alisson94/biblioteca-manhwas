@@ -1,0 +1,114 @@
+/* --- BOTÕES --- */
+
+button,
+[role="button"] {
+  cursor: pointer;
+  font-weight: 500;
+  transition: all var(--transicao-padrao);
+}
+
+/* Botão Primário */
+.btn-primary {
+  background-color: var(--cor-destaque);
+  color: #fff;
+  padding: 0.7rem 1.5rem;
+  border-radius: var(--border-radius-pequeno);
+  border: none;
+  outline: none;
+  box-shadow: none;
+  appearance: none;
+}
+
+.btn-primary:hover {
+  background-color: #007bb5;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 168, 255, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Botão Secundário */
+.btn-secondary {
+  background-color: var(--cor-destaque);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius-pequeno);
+  border: none;
+  outline: none;
+  box-shadow: none;
+  appearance: none;
+}
+
+.btn-secondary:hover {
+  background-color: #007bb5;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 168, 255, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Botão de Edição */
+.btn-edit {
+  background-color: var(--cor-destaque);
+  color: #fff;
+  padding: 0 0.5rem;
+  border-radius: var(--border-radius-pequeno);
+  border: none;
+  outline: none;
+  box-shadow: none;
+  appearance: none;
+  font-size: 2rem;
+}
+
+.btn-edit:hover {
+  background-color: #3c00c9;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 168, 255, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Botão de Deleção */
+.btn-delete {
+  background-color: var(--cor-perigo);
+  color: #fff;
+  padding: 0 0.5rem;
+  border-radius: var(--border-radius-pequeno);
+  border: none;
+  outline: none;
+  box-shadow: none;
+  appearance: none;
+  font-size: 2rem;
+}
+
+.btn-delete:hover {
+  background-color: #f17870;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(244, 67, 54, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Botão Desabilitado */
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button:disabled:hover {
+  background-color: inherit;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Botão de Fechamento */
+.btn-close {
+  background: none;
+  border: none;
+  color: var(--cor-texto-secundario);
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  transition: color var(--transicao-padrao);
+}
+
+.btn-close:hover {
+  color: var(--cor-destaque);
+}

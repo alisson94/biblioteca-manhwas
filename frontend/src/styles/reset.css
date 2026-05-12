@@ -1,0 +1,59 @@
+/* --- RESET --- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Remove default list styles */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Remove default button styles */
+button {
+  font-family: inherit;
+}
+
+/* Remove default link underline */
+a {
+  text-decoration: none;
+}
+
+/* Remove default input/textarea styles */
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+/* Improve form defaults */
+input,
+textarea,
+select {
+  padding: 0;
+  border: none;
+  background: transparent;
+  outline: none;
+}
+
+/* Fix image display */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}

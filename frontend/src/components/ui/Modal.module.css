@@ -1,0 +1,109 @@
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay.active {
+  display: flex;
+}
+
+.content {
+  background-color: var(--cor-card);
+  padding: 2rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 750px;
+  box-shadow: var(--sombra-modal);
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: scaleIn 0.3s ease-in-out;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #444;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.header h2 {
+  margin: 0;
+  color: var(--cor-destaque);
+  font-size: 1.5rem;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: var(--cor-texto-secundario);
+  font-size: 2rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  transition: color var(--transicao-padrao);
+}
+
+.closeButton:hover {
+  color: var(--cor-destaque);
+}
+
+.body {
+  margin-bottom: 1rem;
+}
+
+.footer {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #444;
+}
+
+.footer button {
+  flex: 0 1 auto;
+}
+
+@media (max-width: 640px) {
+  .content {
+    width: 95%;
+    padding: 1.5rem;
+  }
+
+  .footer {
+    flex-direction: column;
+  }
+
+  .footer button {
+    width: 100%;
+  }
+}
+
+/* Scrollbar styling for modal content */
+.content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.content::-webkit-scrollbar-thumb {
+  background: var(--cor-destaque);
+  border-radius: 4px;
+}
+
+.content::-webkit-scrollbar-thumb:hover {
+  background: #007bb5;
+}
