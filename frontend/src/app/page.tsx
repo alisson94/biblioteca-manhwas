@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import { useRouter } from 'next/navigation'
 import Grid from '@/components/ui/Grid'
 import Card from '@/components/ui/Card'
 import Modal from '@/components/ui/Modal'
@@ -10,10 +11,11 @@ import { Manhwa } from '@/types'
 import { manhwaApi } from '@/lib/api'
 
 export default function Home() {
+  const router = useRouter()
   const [manhwas, setManhwas] = useState<Manhwa[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
-  const { toasts, error, info } = useToast()
+  const { toasts, error } = useToast()
 
   // pagination & search
   const [page, setPage] = useState(1)
@@ -132,7 +134,7 @@ export default function Home() {
                   key={manhwa._id}
                   manhwa={manhwa}
                   onClick={() => {
-                    // navigate to detail in Phase 5
+                    router.push(`/manhwa/${manhwa.slug}`)
                   }}
                 />
               ))}
