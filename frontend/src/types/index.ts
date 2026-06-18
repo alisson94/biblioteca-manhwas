@@ -16,7 +16,7 @@ export interface Manhwa {
   titulos: string[];
   slug: string;
   capa: string;
-  status: 'ativo' | 'concluído' | 'pausado' | 'dropped';
+  status: string;
   capitulos: number;
   tags: string[];
   links: Link[];
@@ -66,7 +66,6 @@ export interface CreateLinkPayload {
 export interface UpdateLinkPayload {
   idioma?: string;
   url?: string;
-  cap_atual?: number;
   cap_total?: number;
 }
 

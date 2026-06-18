@@ -6,8 +6,9 @@ import Grid from '@/components/ui/Grid'
 import Card from '@/components/ui/Card'
 import Modal from '@/components/ui/Modal'
 import Toast from '@/components/ui/Toast'
+import { ManhwaForm } from '@/components/forms'
 import { useToast } from '@/hooks/useToast'
-import { Manhwa } from '@/types'
+import { CreateManhwaPayload, Manhwa } from '@/types'
 import { manhwaApi } from '@/lib/api'
 
 export default function Home() {
@@ -15,7 +16,8 @@ export default function Home() {
   const [manhwas, setManhwas] = useState<Manhwa[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
-  const { toasts, error } = useToast()
+  const [isCreating, setIsCreating] = useState(false)
+  const { toasts, success, error } = useToast()
 
   // pagination & search
   const [page, setPage] = useState(1)
@@ -64,6 +66,24 @@ export default function Home() {
 
   const handleAddManhwa = () => setIsAddModalOpen(true)
   const handleCloseModal = () => setIsAddModalOpen(false)
+
+  const handleCreateManhwa = async (payload: CreateManhwaPayload) => {
+    setIsCreating(true)
+
+    try {
+      await manhwaApi.create(payload)
+      success('Manhwa adicionado com sucesso!')
+      setIsAddModalOpen(false)
+      setSearch('')
+      setPage(1)
+      await fetchList(1, '')
+    } catch (err: any) {
+      console.error(err)
+      error(err?.message || 'Erro ao adicionar manhwa')
+    } finally {
+      setIsCreating(false)
+    }
+  }
 
   return (
     <main>
@@ -164,7 +184,13 @@ export default function Home() {
       </div>
 
       <Modal isOpen={isAddModalOpen} title="Adicionar Novo Manhwa" onClose={handleCloseModal} showFooter={false}>
-        <p style={{ color: 'var(--cor-texto-secundario)' }}>Formulário será implementado na Phase 6</p>
+        <ManhwaForm
+          submitLabel="Adicionar Manhwa"
+          requireCover
+          isSubmitting={isCreating}
+          onCancel={handleCloseModal}
+          onSubmit={(payload) => handleCreateManhwa(payload as CreateManhwaPayload)}
+        />
       </Modal>
 
       <Toast toasts={toasts} />

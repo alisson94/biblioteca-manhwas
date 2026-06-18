@@ -1,0 +1,109 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.heroActions,
+.panelActions,
+.linkActions,
+.chapterControls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.heroActions {
+  margin-top: -0.25rem;
+}
+
+.panelActions {
+  justify-content: flex-end;
+}
+
+.linksList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.linkCard {
+  border-radius: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.linkHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.linkUrl {
+  display: inline-block;
+  margin-bottom: 0.85rem;
+  color: var(--cor-acento, #7dd3fc);
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.linkUrl:hover {
+  text-decoration: underline;
+}
+
+.progressBar {
+  height: 0.5rem;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+  margin-bottom: 0.85rem;
+}
+
+.progressBar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #7dd3fc, #22c55e);
+}
+
+.chapterInput {
+  width: 5rem;
+  padding: 0.45rem 0.55rem;
+  background-color: #333;
+  border: 1px solid #555;
+  border-radius: var(--border-radius-pequeno);
+  color: var(--cor-texto);
+}
+
+.smallButton,
+.dangerButton {
+  border: 0;
+  border-radius: var(--border-radius-pequeno);
+  color: #fff;
+  padding: 0.45rem 0.7rem;
+}
+
+.smallButton {
+  background-color: var(--cor-destaque);
+}
+
+.dangerButton {
+  background-color: var(--cor-perigo);
+}
+
+.emptyState {
+  padding: 2rem;
+  text-align: center;
+  color: var(--cor-texto-secundario);
+}
+
+@media (max-width: 640px) {
+  .linkHeader,
+  .panelActions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

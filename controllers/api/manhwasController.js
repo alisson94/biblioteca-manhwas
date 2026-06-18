@@ -148,7 +148,7 @@ async function updateManhwa(req, res, next) {
       titulos: titulos.length ? titulos : undefined,
       status: req.body.status,
       capitulos: capitulos === null ? undefined : capitulos,
-      tags: tags.length ? tags : undefined,
+      tags: Object.prototype.hasOwnProperty.call(req.body, 'tags') ? tags : undefined,
     };
 
     if (req.file) {

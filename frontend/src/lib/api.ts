@@ -65,10 +65,10 @@ export const manhwaApi = {
     if (params?.limit) searchParams.append('limit', params.limit.toString());
     if (params?.search) searchParams.append('search', params.search);
     if (params?.status) searchParams.append('status', params.status);
-    if (params?.tags) searchParams.append('tags', params.tags);
+    if (params?.tags) searchParams.append('tag', params.tags);
 
     const url = `${API_V1_URL}/manhwas${searchParams.size > 0 ? `?${searchParams}` : ''}`;
-    const response = await fetch(url);
+    const response = await fetch(url, { cache: 'no-store' });
     return handleResponse<ListManhwasResponse>(response);
   },
 
@@ -76,7 +76,7 @@ export const manhwaApi = {
    * Get a single manhwa by slug
    */
   async getBySlug(slug: string): Promise<GetManhwaResponse> {
-    const response = await fetch(`${API_V1_URL}/manhwas/${slug}`);
+    const response = await fetch(`${API_V1_URL}/manhwas/${slug}`, { cache: 'no-store' });
     return handleResponse<GetManhwaResponse>(response);
   },
 
@@ -87,8 +87,8 @@ export const manhwaApi = {
     const formData = new FormData();
     
     // Add array of titles
-    payload.titulos.forEach((titulo, index) => {
-      formData.append(`titulos[${index}]`, titulo);
+    payload.titulos.forEach((titulo) => {
+      formData.append('titulos', titulo);
     });
     
     if (payload.capa) {
@@ -99,8 +99,8 @@ export const manhwaApi = {
     formData.append('capitulos', payload.capitulos.toString());
     
     if (payload.tags?.length) {
-      payload.tags.forEach((tag, index) => {
-        formData.append(`tags[${index}]`, tag);
+      payload.tags.forEach((tag) => {
+        formData.append('tags', tag);
       });
     }
 
@@ -119,8 +119,8 @@ export const manhwaApi = {
     const formData = new FormData();
     
     if (payload.titulos?.length) {
-      payload.titulos.forEach((titulo, index) => {
-        formData.append(`titulos[${index}]`, titulo);
+      payload.titulos.forEach((titulo) => {
+        formData.append('titulos', titulo);
       });
     }
     
@@ -136,9 +136,13 @@ export const manhwaApi = {
       formData.append('capitulos', payload.capitulos.toString());
     }
     
-    if (payload.tags?.length) {
-      payload.tags.forEach((tag, index) => {
-        formData.append(`tags[${index}]`, tag);
+    if (payload.tags) {
+      if (payload.tags.length === 0) {
+        formData.append('tags', '');
+      }
+
+      payload.tags.forEach((tag) => {
+        formData.append('tags', tag);
       });
     }
 
@@ -203,12 +207,12 @@ export const linkApi = {
   /**
    * Delete a link
    */
-  async delete(manhwaSlug: string, linkId: string): Promise<ApiResponse<Manhwa>> {
+  async delete(manhwaSlug: string, linkId: string): Promise<ApiResponse<void>> {
     const response = await fetch(`${API_V1_URL}/manhwas/${manhwaSlug}/links/${linkId}`, {
       method: 'DELETE',
     });
     
-    return handleResponse<ApiResponse<Manhwa>>(response);
+    return handleResponse<ApiResponse<void>>(response);
   },
 
   /**

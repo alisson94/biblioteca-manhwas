@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { manhwaApi } from '@/lib/api'
+import DetailActions from './DetailActions'
 import styles from './page.module.css'
 
 type DetailPageProps = {
@@ -106,36 +107,7 @@ export default async function ManhwaDetailPage({ params }: DetailPageProps) {
             </div>
           </div>
 
-          {manhwa.links.length === 0 ? (
-            <div className={styles.emptyState}>
-              <p>Este manhwa ainda não tem links cadastrados.</p>
-            </div>
-          ) : (
-            <div className={styles.linksList}>
-              {manhwa.links.map((link) => (
-                <article key={link._id} className={styles.linkCard}>
-                  <div className={styles.linkHeader}>
-                    <strong>{link.idioma}</strong>
-                    <span>
-                      Capítulo {link.cap_atual} de {link.cap_total}
-                    </span>
-                  </div>
-
-                  <a href={link.url} target="_blank" rel="noreferrer" className={styles.linkUrl}>
-                    {link.url}
-                  </a>
-
-                  <div className={styles.progressBar} aria-label={`Progresso ${link.cap_atual} de ${link.cap_total}`}>
-                    <span
-                      style={{
-                        width: `${Math.min(100, Math.max(0, (link.cap_atual / Math.max(1, link.cap_total)) * 100))}%`,
-                      }}
-                    />
-                  </div>
-                </article>
-              ))}
-            </div>
-          )}
+          <DetailActions manhwa={manhwa} />
         </section>
       </div>
     </main>
